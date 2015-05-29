@@ -1,4 +1,4 @@
-Jenkins Google Container Registry Plugin
+Auth Plugin for Google Container Registry
 ====================
 
 This plugin provides the credential provider to use Google Cloud Platform Oauth Credentials (provided by the Google Oauth Plugin) to access Google Container Registry. It supports both kinds of credentials provided by Google Oauth Plugin: Google Service Account from metadata as well as Google Service Account from private key.
