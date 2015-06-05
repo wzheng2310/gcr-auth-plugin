@@ -73,10 +73,13 @@ public class GoogleContainerRegistryCredentialModule
    * @return whether the credential could be applied to the given requirements.
    */
   public static boolean matches(List<DomainRequirement> requirements) {
+    Jenkins jenkins = Jenkins.getInstance();
+    if (jenkins == null) {
+      throw new IllegalStateException("Jenkins has not been started, or was already shut down");
+    }
     GoogleContainerRegistryCredential.DescriptorImpl descriptor = 
         (GoogleContainerRegistryCredential.DescriptorImpl)
-        Jenkins.getActiveInstance().getDescriptorOrDie(
-            GoogleContainerRegistryCredential.class);
+        jenkins.getDescriptorOrDie(GoogleContainerRegistryCredential.class);
     Domain gcrDomain = new Domain("GCR", "",
         ImmutableList.of(
             new SchemeSpecification("https"),
