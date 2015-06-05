@@ -226,7 +226,7 @@ public class GoogleContainerRegistryCredential
   @Extension
   public static final class DescriptorImpl extends CredentialsDescriptor {
 
-    private static final String GCR_SERVER = "gcr.io";
+    private static final String GCR_SERVER = "gcr.io,*.gcr.io";
 
     public DescriptorImpl() {
       load();

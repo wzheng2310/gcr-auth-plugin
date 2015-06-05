@@ -22,15 +22,15 @@
     <relativePath></relativePath>
   </parent>
 
-  <artifactId>auth-plugin-for-google-container-registry</artifactId>
+  <artifactId>google-container-registry-auth</artifactId>
   <packaging>hpi</packaging>
   <version>0.1-SNAPSHOT</version>
 
-  <name>Auth Plugin for Google Container Registry</name>
+  <name>Google Container Registry Auth Plugin</name>
   <description>
     This plugin exposes a credential for use with the Docker Build Step plugin for authenticating with Google Container Registry as a service account.
   </description>
-  <url>http://wiki.jenkins-ci.org/display/JENKINS/Auth+Plugin+for+Google+Container+Registry</url>
+  <url>http://wiki.jenkins-ci.org/display/JENKINS/Google+Container+Registry+Auth+Plugin</url>
   <licenses>
     <license>
       <name>The Apache V2 License</name>

@@ -1,4 +1,4 @@
-Auth Plugin for Google Container Registry
+Google Container Registry Auth Plugin
 ====================
 
 This plugin provides the credential provider to use Google Cloud Platform Oauth Credentials (provided by the Google Oauth Plugin) to access Google Container Registry. It supports both kinds of credentials provided by Google Oauth Plugin: Google Service Account from metadata as well as Google Service Account from private key.
@@ -11,7 +11,7 @@ First, install Docker Build Step Plugin.
 
 Second, configure your OAuth credentials per instructions from Google OAuth Plugin, using the service account that has read/write access to your Google Container Registry.
 
-Third, install this plugin, then on Jenkins' global configuration page, under "Google Container Registry", set the correct Google Container Registry server address. By default, it is "gcr.io" (Do not include schemes such as "https://").
+Third, install this plugin, then on Jenkins' global configuration page, under "Google Container Registry", set the correct Google Container Registry server address. By default, it is "gcr.io,*.gcr.io" (Do not include schemes such as "https://").
 
 Fourth, in your Jenkins job, add a build step "Execute Docker Container", and choose either "pull image" or "Push image" as your docker command (other docker commands don't require credentials so they are not relevant to this plugin). Enter image name, tag and registry. In the "Registry Server Address" field, by default you should enter "https://gcr.io". The value in this field should match the value in "Google Container Registry" Server Address field in global configuration, but with the scheme (such as https://) added.
 
