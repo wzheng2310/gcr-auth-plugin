@@ -5,6 +5,10 @@ This plugin provides the credential provider to use Google Cloud Platform Oauth 
 
 Your service account will need to have the scope of https://www.googleapis.com/auth/devstorage.read_write or https://www.googleapis.com/auth/devstorage.full_control, and need to have access to your image bucket in Google Container Registry.
 
+[![Build Status](https://jenkins.ci.cloudbees.com/buildStatus/icon?job=plugins/google-container-registry-auth-plugin)](https://jenkins.ci.cloudbees.com/job/plugins/job/google-container-registry-auth-plugin/)
+
+Read more: [http://wiki.jenkins-ci.org/display/JENKINS/Google+Container+Registry+Auth+Plugin](http://wiki.jenkins-ci.org/display/JENKINS/Google+Container+Registry+Auth+Plugin)
+
 Usage
 ===
 First, install Docker Build Step Plugin.

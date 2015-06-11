@@ -75,7 +75,8 @@ public class GoogleContainerRegistryCredentialModule
   public static boolean matches(List<DomainRequirement> requirements) {
     Jenkins jenkins = Jenkins.getInstance();
     if (jenkins == null) {
-      throw new IllegalStateException("Jenkins has not been started, or was already shut down");
+      throw new IllegalStateException(
+          "Jenkins has not been started, or was already shut down");
     }
     GoogleContainerRegistryCredential.DescriptorImpl descriptor = 
         (GoogleContainerRegistryCredential.DescriptorImpl)
