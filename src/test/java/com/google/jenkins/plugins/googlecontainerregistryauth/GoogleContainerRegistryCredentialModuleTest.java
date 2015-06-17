@@ -16,6 +16,13 @@
 
 package com.google.jenkins.plugins.googlecontainerregistryauth;
 
+import com.cloudbees.plugins.credentials.CredentialsNameProvider;
+import com.cloudbees.plugins.credentials.NameWith;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.jenkins.plugins.credentials.oauth.GoogleOAuth2ScopeRequirement;
+import com.google.jenkins.plugins.credentials.oauth.GoogleRobotCredentials;
+import com.google.jenkins.plugins.credentials.oauth.GoogleRobotCredentialsModule;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
@@ -26,13 +33,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import com.cloudbees.plugins.credentials.CredentialsNameProvider;
-import com.cloudbees.plugins.credentials.NameWith;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.jenkins.plugins.credentials.oauth.GoogleOAuth2ScopeRequirement;
-import com.google.jenkins.plugins.credentials.oauth.GoogleRobotCredentials;
-import com.google.jenkins.plugins.credentials.oauth.GoogleRobotCredentialsModule;
 
 /**
  * Tests for {@link GoogleContainerRegistryCredentialModule}.

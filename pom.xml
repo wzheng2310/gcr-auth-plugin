@@ -177,6 +177,13 @@
       <version>14.0.1</version>
     </dependency>
 
+    <!-- Docker Commons -->
+    <dependency>
+        <groupId>org.jenkins-ci.plugins</groupId>
+        <artifactId>docker-commons</artifactId>
+        <version>1.0</version>
+    </dependency>
+
     <!-- Auth dependency -->
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
