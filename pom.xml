@@ -19,12 +19,12 @@
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
     <version>1.596.2</version>
-    <relativePath></relativePath>
+    <relativePath />
   </parent>
 
   <artifactId>google-container-registry-auth</artifactId>
   <packaging>hpi</packaging>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.2-SNAPSHOT</version>
 
   <name>Google Container Registry Auth Plugin</name>
   <description>
