@@ -16,6 +16,14 @@
 
 package com.google.jenkins.plugins.googlecontainerregistryauth;
 
+import com.cloudbees.plugins.credentials.CredentialsNameProvider;
+import com.cloudbees.plugins.credentials.NameWith;
+import com.cloudbees.plugins.credentials.SystemCredentialsProvider;
+import com.google.jenkins.plugins.credentials.oauth.GoogleOAuth2ScopeRequirement;
+import com.google.jenkins.plugins.credentials.oauth.GoogleRobotCredentials;
+import com.google.jenkins.plugins.credentials.oauth.GoogleRobotCredentialsModule;
+import com.thoughtworks.xstream.XStream;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
@@ -32,15 +40,8 @@ import org.jvnet.hudson.test.WithoutJenkins;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.cloudbees.plugins.credentials.CredentialsNameProvider;
-import com.cloudbees.plugins.credentials.NameWith;
-import com.cloudbees.plugins.credentials.SystemCredentialsProvider;
-import com.google.jenkins.plugins.credentials.oauth.GoogleOAuth2ScopeRequirement;
-import com.google.jenkins.plugins.credentials.oauth.GoogleRobotCredentials;
-import com.google.jenkins.plugins.credentials.oauth.GoogleRobotCredentialsModule;
-import com.thoughtworks.xstream.XStream;
-
 import hudson.util.Secret;
+import jenkins.model.Jenkins;
 
 /**
  * Tests for {@link GoogleContainerRegistryCredential}.
@@ -94,7 +95,6 @@ public class GoogleContainerRegistryCredentialTest {
       extends GoogleContainerRegistryCredentialModule {
 
     public OtherFakeModule() {
-      // super("gcr.io");
     }
 
     public String getIdentity(GoogleRobotCredentials credentials) {
@@ -209,6 +209,12 @@ public class GoogleContainerRegistryCredentialTest {
     assertTrue(underTest.module instanceof FakeModule);
     // WithoutJenkins so we are an OtherFakeModule
     assertTrue(deserialized.module instanceof OtherFakeModule);
+  }
+
+  @Test
+  public void testDescriptorNotRegistered() {
+    assertTrue(Jenkins.getInstance().getDescriptor(
+        GoogleContainerRegistryCredential.class) == null);
   }
 
   private static final String NAME = "foo-bar Container Registry Account";

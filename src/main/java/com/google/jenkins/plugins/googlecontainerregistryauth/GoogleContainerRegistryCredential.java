@@ -24,9 +24,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.StaplerRequest;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.cloudbees.plugins.credentials.CredentialsDescriptor;
@@ -37,18 +34,19 @@ import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredenti
 import com.cloudbees.plugins.credentials.domains.DomainRequirement;
 import com.cloudbees.plugins.credentials.domains.DomainRestrictedCredentials;
 import com.cloudbees.plugins.credentials.impl.BaseStandardCredentials;
-import com.google.api.client.util.Strings;
+
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import com.google.jenkins.plugins.credentials.domains.DomainRequirementProvider;
 import com.google.jenkins.plugins.credentials.oauth.GoogleRobotCredentials;
 
+import org.kohsuke.stapler.DataBoundConstructor;
+
 import hudson.Extension;
+import hudson.XmlFile;
 import hudson.util.Secret;
 
 import jenkins.model.Jenkins;
-
-import net.sf.json.JSONObject;
 
 /**
  * This new kind of credential provides an embedded
@@ -92,6 +90,14 @@ public class GoogleContainerRegistryCredential
    */
   public String getCredentialsId() {
     return credentialsId;
+  }
+
+  /**
+   * @return "not@val.id", this is an hard coded value that Google Container
+   *         Registry expects.
+   */
+  public String getEmail() {
+    return "not@val.id";
   }
 
   /**
@@ -168,7 +174,7 @@ public class GoogleContainerRegistryCredential
   /** {@inheritDoc} */
   @Override
   public DescriptorImpl getDescriptor() {
-    return (DescriptorImpl) super.getDescriptor();
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -216,26 +222,15 @@ public class GoogleContainerRegistryCredential
     return module.getToken(getCredentials());
   }
 
-  public String getGcrServer() {
-    return ((DescriptorImpl) super.getDescriptor()).getGcrServer();
-  }
-
   /**
-   * Descriptor class for its global configuration.
+   * Descriptor class for its global configuration. Keep it for backward
+   * Compatibility. Note that this descriptor is not annotated with @Extension
+   * so that it doesn't show up when you try to add credentials.
    */
-  @Extension
   public static final class DescriptorImpl extends CredentialsDescriptor {
-
-    private static final String GCR_SERVER = "gcr.io,*.gcr.io";
 
     public DescriptorImpl() {
       load();
-    }
-
-    /** Display name to prefer in the context of global settings. */
-    public String getGlobalDisplayName() {
-      return Messages.
-          GoogleContainerRegistryCredential_GlobalDisplayName();
     }
 
     @Override
@@ -244,22 +239,18 @@ public class GoogleContainerRegistryCredential
       return null;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean configure(StaplerRequest req, JSONObject json)
-        throws FormException {
-      json = json.getJSONObject(getGlobalDisplayName());
-      gcrServer = json.has("gcrServer") ?
-          json.getString("gcrServer") : null;
-      save();
-      return true;
-    }
-
     /**
      * Retrieve the Google Registry Container server URL.
      */
     @Nullable public String getGcrServer() {
-      return Strings.isNullOrEmpty(gcrServer) ? GCR_SERVER : gcrServer;
+      return gcrServer;
+    }
+
+    public void deleteConfigFile() {
+      XmlFile configFile = getConfigFile();
+      if (configFile.exists()) {
+        configFile.delete();
+      }
     }
 
     private String gcrServer = null;

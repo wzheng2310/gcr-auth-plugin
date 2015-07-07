@@ -18,14 +18,14 @@ package com.google.jenkins.plugins.googlecontainerregistryauth;
 
 import java.util.List;
 
-import org.acegisecurity.Authentication;
-
 import com.cloudbees.plugins.credentials.Credentials;
 import com.cloudbees.plugins.credentials.CredentialsProvider;
 import com.cloudbees.plugins.credentials.domains.DomainRequirement;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.jenkins.plugins.credentials.oauth.GoogleRobotCredentials;
+
+import org.acegisecurity.Authentication;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;

@@ -29,6 +29,7 @@ import com.google.jenkins.plugins.credentials.oauth.GoogleOAuth2ScopeRequirement
 import com.google.jenkins.plugins.credentials.oauth.GoogleRobotCredentials;
 
 import hudson.util.Secret;
+import jenkins.model.GlobalConfiguration;
 import jenkins.model.Jenkins;
 
 /**
@@ -78,14 +79,14 @@ public class GoogleContainerRegistryCredentialModule
       throw new IllegalStateException(
           "Jenkins has not been started, or was already shut down");
     }
-    GoogleContainerRegistryCredential.DescriptorImpl descriptor = 
-        (GoogleContainerRegistryCredential.DescriptorImpl)
-        jenkins.getDescriptorOrDie(GoogleContainerRegistryCredential.class);
+    GoogleContainerRegistryCredentialGlobalConfig gcrGlobalConfig =
+        GlobalConfiguration.all().get(
+            GoogleContainerRegistryCredentialGlobalConfig.class);
     Domain gcrDomain = new Domain("GCR", "",
         ImmutableList.of(
             new SchemeSpecification("https"),
             new HostnameSpecification(
-                descriptor.getGcrServer(), "")));
+                gcrGlobalConfig.getGcrServer(), "")));
     return gcrDomain.test(requirements);
   }
 
