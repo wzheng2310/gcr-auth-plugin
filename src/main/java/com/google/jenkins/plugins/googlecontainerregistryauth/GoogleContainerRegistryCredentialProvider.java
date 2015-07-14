@@ -35,9 +35,8 @@ import hudson.security.ACL;
 /**
  * This class automatically wraps existing GoogleRobotCredentials instances
  * into a username password credential type that is compatible with Docker
- * remote API client plugin like
- * {@link org.jenkinsci.plugins.dockerbuildstep.cmd.DockerCommand}.
- * In this way, a 'projecthosting'-scoped Oauth credential can be reused for
+ * remote API client plugin.
+ * In this way, a 'project-hosting'-scoped Oauth credential can be reused for
  * Google Container Registry access.
  */
 @Extension

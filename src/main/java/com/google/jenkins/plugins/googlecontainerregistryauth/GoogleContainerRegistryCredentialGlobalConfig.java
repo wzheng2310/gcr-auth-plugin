@@ -65,7 +65,7 @@ public class GoogleContainerRegistryCredentialGlobalConfig
   }
 
   /**
-   * Retrieve the Google Registry Container server URL.
+   * @return the Google Registry Container server URL.
    */
   @Nullable public String getGcrServer() {
     return Strings.isNullOrEmpty(gcrServer) ? GCR_SERVER : gcrServer;

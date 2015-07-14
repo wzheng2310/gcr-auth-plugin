@@ -45,9 +45,11 @@ public class GoogleContainerRegistryCredentialModule
   }
 
   /**
-   * Retrieve the identity associated with the given
-   * {@link GoogleRobotCredentials}. Google Container Registry always expects
-   * this to be "_token".
+   * @param credentials the underlying {@link GoogleRobotCredentials} this
+   *        plugin is wrapping.
+   * @return the identity associated with the given
+   *         {@code credentials}. Google Container Registry always expects
+   *         this to be "_token".
    */
   public String getIdentity(GoogleRobotCredentials credentials) {
     return "_token";
@@ -63,7 +65,9 @@ public class GoogleContainerRegistryCredentialModule
   }
 
   /**
-   * Retrieve an access token for the given {@link GoogleRobotCredentials}.
+   * @param credentials the underlying {@link GoogleRobotCredentials} this
+   *        plugin is wrapping.
+   * @return an access token for the given {@code credentials}.
    */
   public Secret getToken(GoogleRobotCredentials credentials) {
     return credentials.getAccessToken(getRequirement());
