@@ -1,7 +1,7 @@
 Google Container Registry Auth Plugin
 ====================
 
-This plugin provides the credential provider to use Google Cloud Platform Oauth Credentials (provided by the Google Oauth Plugin) to access Google Container Registry. It supports both kinds of credentials provided by Google Oauth Plugin: Google Service Account from metadata as well as Google Service Account from private key.
+This plugin provides the credential provider to use Google Cloud Platform Oauth Credentials (provided by the Google Oauth Plugin) to access Google Container Registry (GCR). It supports both kinds of credentials provided by Google Oauth Plugin: Google Service Account from metadata as well as Google Service Account from private key.
 
 Your service account will need to have the scope of https://www.googleapis.com/auth/devstorage.read_write or https://www.googleapis.com/auth/devstorage.full_control, and need to have access to your image bucket in Google Container Registry.
 
@@ -11,21 +11,32 @@ Read more: [http://wiki.jenkins-ci.org/display/JENKINS/Google+Container+Registry
 
 Usage
 ===
+This plugin must be used with some other plugins which use
+[Credentials Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Credentials+Plugin) or
+[Docker Commons Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Docker+Commons+Plugin)
+(preferred)
+to pull Docker images from or push Docker iamges to GCR.
+
+There are several plugins that are known to work with this plugin, for example,
+[Docker Build Step Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Docker+build+step+plugin),
+and [CloudBees Docker Custom Build Environment Plugin]
+(https://wiki.jenkins-ci.org/display/JENKINS/CloudBees+Docker+Custom+Build+Environment+Plugin). The below description is using Docker Build Step Plugin as an example.
+
 First, install Docker Build Step Plugin.
 
 Second, configure your OAuth credentials per instructions from Google OAuth Plugin, using the service account that has read/write access to your Google Container Registry.
 
 Third, install this plugin, then on Jenkins' global configuration page, under "Google Container Registry", set the correct Google Container Registry server address. By default, it is "gcr.io,*.gcr.io" (Do not include schemes such as "https://").
 
-Fourth, in your Jenkins job, add a build step "Execute Docker Container", and choose either "pull image" or "Push image" as your docker command (other docker commands don't require credentials so they are not relevant to this plugin). Enter image name, tag and registry. In the "Registry Server Address" field, by default you should enter "https://gcr.io". The value in this field should match the value in "Google Container Registry" Server Address field in global configuration, but with the scheme (such as https://) added.
+Fourth, in your Jenkins job, add a build step "Execute Docker Container", and choose either "pull image" or "Push image" as your docker command (other docker commands don't require credentials so they are not relevant to this plugin). Enter image name, tag and registry. In the "Docker Registry URL" field, enter the gcr.io hostnames for your docker image (the default is "https://gcr.io" but you still need to enter this value). The value in this field should match the value in "Google Container Registry" Server Address field in global configuration, but with the scheme (such as https://) added.
 
-Then, in the "Docker Credential" dropdown, select your account marked as "Google Contaner Registry Account".
+Then, in the "Docker Credential" dropdown, select your account marked as "Google Container Registry Account".
 
 Save your configuration and run your job.
 
 Security Warning
 ===
-Docker Build Step Plugin will pass the credentials to Docker server daemon. If the Docker server daemon listens on HTTP port, this will create a security hole because the credentials (not encrypted, only base64 encoded) can be intercepted via the HTTP traffic. This is a problem of Docker itself. Configuring the Docker server daemon to listen on HTTP port is strongly discouraged. When communication to Docker daemon on a remote machine is needed, the traffic can be secured by HTTPS, see Docker's documentation: http://docs.docker.com/articles/https/.
+Docker Build Step Plugin will pass the credentials to Docker server daemon. If the Docker server daemon listens on HTTP port without using TLS, this will create a security hole because the credentials (not encrypted, only base64 encoded) can be intercepted via the HTTP traffic. This is a problem of Docker itself. Configuring the Docker server daemon to listen on HTTP port without using TLS is strongly discouraged. When communication to Docker daemon on a remote machine is needed, the traffic can be secured by HTTPS, see Docker's documentation: http://docs.docker.com/articles/https/.
 
 Development
 ===========
