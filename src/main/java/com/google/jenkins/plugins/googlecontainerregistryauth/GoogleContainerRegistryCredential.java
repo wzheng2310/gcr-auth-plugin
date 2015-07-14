@@ -50,17 +50,18 @@ import jenkins.model.Jenkins;
 
 /**
  * This new kind of credential provides an embedded
- * {@link GoogleRobotCredentials} as a username and password for use with a
- * {@link org.jenkinsci.plugins.dockerbuildstep.cmd.DockerCommand}.
+ * {@link GoogleRobotCredentials} as a username and password when a credential
+ * for Google Container Registry end point is needed.
+ * 
  * <p>
- * BACKGROUND: Google Container Registry accepts a
- * username/password combination that is truly "_token:<oauth_token>".
+ * BACKGROUND: Google Container Registry accepts a username/password
+ * combination that is truly {@literal "_token:<oauth_token>"}.
  *
  * This credential wraps a service account credential to provide it in this
  * manner as a {@code StandardUsernamePasswordCredentials} for usage with the
- * new {@code Credentials}-aware
- * {@link org.jenkinsci.plugins.dockerbuildstep.cmd.DockerCommand}
- * plugins.
+ * new {@link com.cloudbees.plugins.credentials.Credentials}-aware or
+ * {@link org.jenkinsci.plugins.docker.commons.credentials.DockerRegistryToken}
+ * -aware plugins.
  */
 @NameWith(value = GoogleContainerRegistryCredential.NameProvider.class,
     priority = 99)
@@ -85,7 +86,7 @@ public class GoogleContainerRegistryCredential
   }
 
   /**
-   * Return the unique ID of the inner {@link GoogleRobotCredentials} that this
+   * @return the unique ID of the inner {@link GoogleRobotCredentials} that this
    * Username/Password proxy is wrapping.
    */
   public String getCredentialsId() {
@@ -101,7 +102,8 @@ public class GoogleContainerRegistryCredential
   }
 
   /**
-   * Retrieve our wrapped credentials based on the above ID we store.
+   * @return the wrapped credentials based on the ID returned by
+   *         {@code getCredentialsId()}
    */
   @Nullable
   public GoogleRobotCredentials getCredentials() {
@@ -197,8 +199,8 @@ public class GoogleContainerRegistryCredential
   }
 
   /**
-   * Provide a name that the user will understand, in the dropdown
-   * shown by {@link org.jenkinsci.plugins.dockerbuildstep.cmd.DockerCommand}.
+   * Provide a name that the user will understand, in the credential selection
+   * drop-down shown by plugins that requires Docker registry credentials.
    */
   public static class NameProvider
       extends CredentialsNameProvider<GoogleContainerRegistryCredential> {
@@ -240,7 +242,7 @@ public class GoogleContainerRegistryCredential
     }
 
     /**
-     * Retrieve the Google Registry Container server URL.
+     * @return the Google Registry Container server URL.
      */
     @Nullable public String getGcrServer() {
       return gcrServer;

@@ -24,7 +24,7 @@
 
   <artifactId>google-container-registry-auth</artifactId>
   <packaging>hpi</packaging>
-  <version>0.2-SNAPSHOT</version>
+  <version>0.3-SNAPSHOT</version>
 
   <name>Google Container Registry Auth Plugin</name>
   <description>
